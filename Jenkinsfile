@@ -51,7 +51,7 @@ pipeline {
                 timeout(time: 3, unit:'MINUTES'){
 				   script{
 				        println('代码扫描')
-						tools.PrintMes('this my lib')
+						tools.PrintMes('this my share library')
 					}
 				}
             }
