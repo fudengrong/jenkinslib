@@ -1,33 +1,34 @@
 #!groovy
 
 string bulidShell = "${env.bulidShell}"
-
 pipeline {
-    agent {node {label "master"}}
-	
-    stage("mavenbulid"){
+    //agent {node {label "master"}}
+	agent any
+	stages{
+    stage("MAVEN"){
         steps {
           script{
-            mavenHome = tool "m3"
-            sh "${maven}/bin/mvn ${bulidShell}"
+            mavenHome = tool "MAVEN"
+            sh "${mavenHome}/bin/mvn ${bulidShell}"
 			}
         }
     }
-    stage("ant"){
+    stage("ANT"){
         steps {
           script{
-            antHome = tool "m3"
-            sh "${maven}/bin/ant ${bulidShell}"
+            antHome = tool "ANT"
+            sh "${antHome}/bin/ant ${bulidShell}"
 			}
         }
     }
-    stage("nodejs"){
+    stage("GRADLE"){
         steps {
           script{
-            nodejsHome = tool "m3"
-            sh "${maven}/bin/nodejs ${bulidShell}"
+            gradleHome = tool "GRADLE"
+            sh "${gradleHome}/bin/gradle ${bulidShell}"
 			}
         }
     }
-}			
+}	
+}		
 	
