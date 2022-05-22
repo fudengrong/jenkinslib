@@ -16,7 +16,8 @@ pipeline {
 	}
 		
    stages {//pipeline 
-        stage('getcode') { //阶段名称
+	   //下载代码
+        stage('getcode') { 
             steps { //步骤
                 timeout(time: 3, unit:'MINUTES'){ //设置超时时间
 				   script{ //运行代码
@@ -29,13 +30,13 @@ pipeline {
 				}
             }
         }
-		
-		stage('bulid') {//步骤2
+	 //打包构建	
+	stage('bulid') {
             steps { 
                 timeout(time: 2, unit:'MINUTES'){
 				   script{
-				        println('代码构建')
-					tools.PrintMes('代码构建','red')
+				        println('应用打包')
+					tools.PrintMes('应用打包','red')
 				        //引用mvn
 				        mvnHome=tool "m3"
 				        println(mvnHome)
@@ -46,8 +47,8 @@ pipeline {
 				}
             }
         }
-		
-		stage('codescan') {//步骤3
+        //代码扫描
+	stage('codescan') {//步骤3
             steps { 
                 timeout(time: 3, unit:'MINUTES'){
 				   script{
@@ -57,8 +58,8 @@ pipeline {
 				}
             }
         }
-		
-		stage('test') {//步骤4
+	//测试	
+	stage('test') {//步骤4
             steps { 
                 timeout(time: 4, unit:'MINUTES'){
 				   script{
@@ -80,19 +81,19 @@ pipeline {
 		success {
 		  script{
 		    currentBuild.description = "\n 构建成功！"
-			tools.PrintMes('代码扫描','green')  
+			tools.PrintMes('构建成功！','green')  
 		  }
 		}
 		failure {
 		  script{
 		    currentBuild.description = "\n 构建失败！"
-			  tools.PrintMes('代码扫描','green') 
+			  tools.PrintMes('构建失败！','green') 
 		  }
 		}
 		aborted {
 		  script{
 		    currentBuild.description = "\n 用户取消！"
-			  tools.PrintMes('代码扫描','green') 
+			  tools.PrintMes('用户取消！','green') 
 		  }
 		}		
     }
