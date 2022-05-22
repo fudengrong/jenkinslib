@@ -1,0 +1,16 @@
+#!groovy
+
+pipeline {
+  agent {node { label "master"} }
+  stages{
+    //构建
+    stage("bulid"){
+      script{
+        mavenHome = tools "m3"
+        sh "${maven}/bin/mvn --version"
+      }
+    }
+  }
+  
+
+}
