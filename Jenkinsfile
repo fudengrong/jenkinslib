@@ -20,8 +20,8 @@ pipeline {
             steps { //步骤
                 timeout(time: 3, unit:'MINUTES'){ //设置超时时间
 				   script{ //运行代码
-				        println('拉去代码')
-				        
+				        println('拉取代码')
+				        tools.PrintMes('拉取代码','red') 
 				        println("${test}")
 						//使用用户输入确认信息
 				        input id: 'test', message: '请确认项目名称', ok: '是的，请继续吧！', parameters: [choice(choices: ['a', 'b'], name: 'test')], submitter: 'admin'
@@ -34,7 +34,8 @@ pipeline {
             steps { 
                 timeout(time: 2, unit:'MINUTES'){
 				   script{
-				        println('构建')
+				        println('代码构建')
+					tools.PrintMes('代码构建','red')
 				        //引用mvn
 				        mvnHome=tool "m3"
 				        println(mvnHome)
@@ -51,7 +52,7 @@ pipeline {
                 timeout(time: 3, unit:'MINUTES'){
 				   script{
 				        println('代码扫描')
-						tools.PrintMes('this my share library')
+						tools.PrintMes('代码扫描','red')
 					}
 				}
             }
@@ -62,6 +63,7 @@ pipeline {
                 timeout(time: 4, unit:'MINUTES'){
 				   script{
 				        println('代码测试')
+					   tools.PrintMes('代码测试','red')
 					}
 				}
             }
@@ -78,16 +80,19 @@ pipeline {
 		success {
 		  script{
 		    currentBuild.description = "\n 构建成功！"
+			tools.PrintMes('代码扫描','green')  
 		  }
 		}
 		failure {
 		  script{
 		    currentBuild.description = "\n 构建失败！"
+			  tools.PrintMes('代码扫描','green') 
 		  }
 		}
 		aborted {
 		  script{
 		    currentBuild.description = "\n 用户取消！"
+			  tools.PrintMes('代码扫描','green') 
 		  }
 		}		
     }
