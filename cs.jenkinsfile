@@ -5,7 +5,15 @@ pipeline {
     //agent {node {label "master"}}
 	agent any
 	stages{
-    stage("MAVEN"){
+     stage("GRADLE"){ 
+        steps {
+          script{
+            gradleHome = tool "GRADLE"
+            sh "${gradleHome}/bin/gradle ${bulidShell}"
+			}
+        }
+    }
+        stage("MAVEN"){
         steps {
           script{
             mavenHome = tool "MAVEN"
@@ -21,14 +29,6 @@ pipeline {
 			}
         }
     }
-    stage("GRADLE"){
-        steps {
-          script{
-            gradleHome = tool "GRADLE"
-            sh "${gradleHome}/bin/gradle ${bulidShell}"
-			}
-        }
-    }
 }	
 }		
-	
+		
