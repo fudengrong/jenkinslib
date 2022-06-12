@@ -11,7 +11,7 @@ def Build(BuildType,BuildShell){
         sh """
            export npmHome=/usr/share/nginx/html/node-v16.15.1-linux-x64
            export PATH=\$PATH:\$npmHome/bin
-           node -v
+           node 
            """
     } else {
     sh "${BuildHome}/bin/${BuildType} ${BuildShell} "
