@@ -3,6 +3,7 @@
 @Library('jenkinslib')_
 
 def build = new org.devops.build()
+def tools = new org.devops.tools()
 
 string buildShell = "${env.BuildShell}"
 string buildType = "${env.BuildType}"
