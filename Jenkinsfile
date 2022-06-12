@@ -2,6 +2,10 @@
 //应用共享库
 @Library('jenkinslib')_
 
+def build = new org.devops.build()
+string buildShell = "${env.BuildShell}"
+string buildType = "${env.BuildType}"
+
 def tools = new org.devops.tools()
 hello()
 
