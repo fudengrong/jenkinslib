@@ -1,0 +1,64 @@
+#!groovy
+//应用共享库
+@Library('jenkinslib')_
+
+def build = new org.devops.build()
+string buildShell = "${env.BuildShell}"
+string buildType = "${env.BuildType}"
+
+def tools = new org.devops.tools()
+hello()
+
+pipeline {
+    agent any
+	
+    options {
+	   timestamps () //记录日志时间
+	   skipDefaultCheckout()
+	   disableConcurrentBuilds() //禁止并行
+	   timeout(time: 1, unit: 'HOURS')  //设置流水线运行的超时时为1小时
+	   
+	}
+		
+   stages {//pipeline 
+	 //打包构建	
+	stage('bulid') {
+            steps { 
+                timeout(time: 2, unit:'MINUTES'){
+				   script{
+                        build.Build(buildType,buildShell)				   
+					}
+				}
+            }
+        }
+    }
+	//构建后的操作
+	post { 
+        always {
+		  script{
+		    println("always")
+		  }
+		}
+		
+		success {
+		  script{
+		    currentBuild.description = "\n 构建成功！"
+			tools.PrintMes('构建成功！','green')  
+		  }
+		}
+		failure {
+		  script{
+		    currentBuild.description = "\n 构建失败！"
+			  tools.PrintMes('构建失败！','green') 
+		  }
+		}
+		aborted {
+		  script{
+		    currentBuild.description = "\n 用户取消！"
+			  tools.PrintMes('用户取消！','green') 
+		  }
+		}		
+    }
+	
+	
+}
