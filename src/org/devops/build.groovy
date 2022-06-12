@@ -3,7 +3,7 @@ package org.devops
 //构建类型
 
 def Build(BuildType,BuildShell){
-    def BuildTools = ['mvn':'MAVEN','ant':'ANT','gradle':'GRADLE']
+    def BuildTools = ['mvn':'MAVEN','ant':'ANT','gradle':'GRADLE','node':'node']
     println("当前选中构建类型: ${BuildType}")
     BuildHome = tool BuildTools[BuildType]
     
