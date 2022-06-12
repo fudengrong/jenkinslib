@@ -1,0 +1,107 @@
+#!groovy
+2
+//应用共享库
+3
+@Library('jenkinslib')_
+4
+​
+5
+def build = new org.devops.build()
+6
+string buildShell = "${env.BuildShell}"
+7
+string buildType = "${env.BuildType}"
+8
+​
+9
+def tools = new org.devops.tools()
+10
+hello()
+11
+​
+12
+pipeline {
+13
+    agent any
+14
+        
+15
+    options {
+16
+           timestamps () //记录日志时间
+17
+           skipDefaultCheckout()
+18
+           disableConcurrentBuilds() //禁止并行
+19
+           timeout(time: 1, unit: 'HOURS')  //设置流水线运行的超时时为1小时
+20
+           
+21
+        }
+22
+                
+23
+   stages {//pipeline 
+24
+           //下载代码
+25
+        stage('getcode') { 
+26
+            steps { //步骤
+27
+                timeout(time: 3, unit:'MINUTES'){ //设置超时时间
+28
+                                   script{ //运行代码
+29
+                                        println('拉取代码')
+30
+                                        tools.PrintMes('拉取代码','red') 
+31
+                                        println("${test}")
+32
+                                                //使用用户输入确认信息
+33
+                                        input id: 'test', message: '请确认项目名称', ok: '是的，请继续吧！', parameters: [choice(choices: ['a', 'b'], name: 'test')], submitter: 'admin'
+34
+                                        }       
+35
+                                }
+36
+            }
+37
+        }
+38
+         //打包构建 
+39
+        stage('bulid') {
+40
+            steps { 
+41
+                timeout(time: 2, unit:'MINUTES'){
+42
+                                   script{
+43
+                                        println('应用打包')
+44
+                                        tools.PrintMes('应用打包','red')
+45
+                                        //引用mvn
+46
+                                        mvnHome=tool "MAVEN"
+47
+                                        println(mvnHome)
+48
+                                        
+49
+                                        sh "${mvnHome}/bin/mvn --version"
+50
+                                        
+51
+                                        }
+52
+                                }
+53
+            }
+54
+        }
