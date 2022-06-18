@@ -8,6 +8,7 @@ def tools = new org.devops.tools()
 
 string buildShell = "${env.BuildShell}"
 string buildType = "${env.BuildType}"
+string deployHosts ="${env.deployHosts}"
 
 pipeline {
     agent any
