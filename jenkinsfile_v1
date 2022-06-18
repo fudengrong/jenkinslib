@@ -28,7 +28,7 @@ pipeline {
                 timeout(time: 2, unit:'MINUTES'){
 				   script{
                         build.Build(buildType,buildShell)
-					   deploy.SaltDeploy("${deployHosts}","test.ping")
+					   //deploy.SaltDeploy("${deployHosts}","test.ping")
 					   deploy.AnsibleDeploy("${deployHosts}","-m ping")
 					}
 				}
